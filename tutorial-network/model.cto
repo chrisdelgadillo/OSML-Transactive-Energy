@@ -1,0 +1,45 @@
+namespace org.example.mynetwork
+participant Owner identified by OwnerID{
+   o String OwnerID//Owner ID
+   o String OwnerFirstName//First name of owner
+   o String OwnerLastName
+   o UnitedStatesAddress address
+}
+ 
+abstract concept Address{
+   o String street
+   o String city default ="Vista"
+   o String country default = "US"
+   o Integer[] counts optional
+}
+ 
+concept UnitedStatesAddress extends Address{
+ o String zipcode
+}
+ 
+asset Currency identified by CurrencyID{
+  --> Owner CurrencyOwner
+  o Integer AmountofCurrency
+  o String CurrencyID   ///Need to check if needed
+}
+ 
+asset Electricity identified by ElectricityID{
+   -->Owner ElectricityOwner
+   o Integer AmountofWatts
+   o String ElectricityID //Need to check if needed
+}
+ 
+transaction sampleTransaction{
+  -->Electricity assetElectricity
+  -->Currency assetCurrency
+  o Integer ElectricityTranser
+  o Integer CurrencyTransfer
+}
+ 
+event event{
+-->Electricity assetElectricity
+-->Currency assetCurrency
+ o Integer oldValueCurrency
+ o Integer oldValueElectricity
+ o Integer newValueCurrency
+ o Integer newValueElectricity
