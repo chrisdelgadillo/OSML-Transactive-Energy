@@ -17,53 +17,45 @@
  */
 namespace org.osml.energy
 
-participant Person identified by ParticipantID{
-   o String ParticipantID
-   o String ParticipantFirstName//First name of owner
-   o String ParticipantLastName
+abstract participant Person identified by email{
+   o String email
    o Address address
+   o Double accountBalance
+   o String fName//First name of owner
+   o String lName 
+   o Double wattsHave
 }
  
+participant Buyer extends Person{
+  o Double wattsWant
+}
+
+participant Seller extends Person{
+  o Double ppw //price per watt
+}
 concept Address{
    o String street
    o String city default ="Vista"
    o String country default = "United States"
+   o String zipcode
 }
- 
-concept UnitedStatesAddress extends Address{
- o String zipcode
-}
+
 asset Contract identified by contractId {
 o String contractId 
-o Double unitPrice //price per unit in currency
+o Double totalPrice //price per unit in currency
 o DateTime timeStamp
-o Long currency
--->Electricity electricity
--->Participant seller
--->Participant buyer
+o Double numWatts
+//-->Electricity electricity
+-->Seller seller
+-->Buyer buyer
 }
+
+
 asset Electricity identified by electricityID{
   o String electricityID   
   o Double unitCount //# of wH
-  --> Contract contract
-}
- 
-asset Currency identified by currencyID{
-  o String currencyID   
-  o Double unitCount //# of wH
-  //--> Contract contract
-}
- 
-/**
- * An abstract transaction that is related to a Shipment
- */
-abstract transaction EnergyMove {
-    --> Electricity electricity
 }
 
-transaction TemperatureReading extends EnergyMove {
-  o DateTime timeStamp
-  o String sellingId
+transaction SetupDemo{
+
 }
-
-
