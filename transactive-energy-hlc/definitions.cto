@@ -1,0 +1,48 @@
+namespace org.example.mynetwork
+
+enum Currency { //this can be expanded	
+  o USD
+  o EURO
+  o POUND
+}
+participant Person identified by ParticipantID{
+   o String ParticipantID
+   o String ParticipantFirstName//First name of owner
+   o String ParticipantLastName
+   o Address address
+}
+participant Buyer extends Person{
+  o Double desiredWattage
+}
+participant Seller extends Person{
+  o Double offering
+}
+ 
+abstract concept Address{
+   o String street
+   o String city default ="Vista"
+   o String country default = "United States"
+   o String zipcode
+}
+asset Contract identified by contractId {
+o String contractId 
+o Double unitPrice //price per unit in currency
+o Currency currency
+o String status
+--> Seller seller
+--> Buyer buyer
+o DateTime timeStamp
+}
+asset Electricity identified by electricityID{
+  o String electricityID   
+  o Double unitCount //# of wH
+  --> Contract contract
+}
+abstract transaction ElectricityTransaction {
+  --> Electricity electricity
+}
+/*
+event event {
+  o DateTime timeStamp
+}
+*/
