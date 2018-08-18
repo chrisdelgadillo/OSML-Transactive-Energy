@@ -4,7 +4,8 @@ var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var mongoose = require('mongoose');
-mongoose.connect("mongodb://192.168.0.204:27017/query-gui", { useNewUrlParser: true });
+//mongoose.connect("mongodb://192.168.0.204:27017/query-gui", { useNewUrlParser: true });
+mongoose.connect("mongodb://localhost:27017/query-gui", { useNewUrlParser: true });
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
