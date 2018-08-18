@@ -1,0 +1,3 @@
+Step 1: Establish the mongoDB environment by typing "mongod" in a new terminal window (the directory doesn't matter)
+Step 2: Start the nodejs server.  In another terminal window, cd into query-gui folder and type "node app".
+Step 3: The server is now listening on port 3000 and can be accessed by typing "localhost:3000" in any web browser.
