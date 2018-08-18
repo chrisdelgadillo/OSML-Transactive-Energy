@@ -1,0 +1,101 @@
+<html>
+
+<head>
+  <title>Query</title>
+  <link rel="stylesheet" href="/stylesheets/style.css">
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
+  <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
+</head>
+<!-- 
+  This is assuming the callback data from the server is structured as follows:
+    {
+      energyReading: 3737,
+      buyerId: 3737,
+      sellerId: 3737,
+      timeStamp: Tue Aug 14 2018 13:55:36 GMT-0700 (Pacific Daylight Time)
+    }
+-->
+
+<body>
+  <h1>Query</h1>
+  <!-- <p>Query-All will return all data stored in the mongo database</p> -->
+  <p>Query-Post will send all data within the given parameters to the mongo database</p>
+  <br>
+  <!--
+  <p>Use the drop-down to select the desired query type</p>
+  <select>
+    <option id= "query-everything">query-everything</option>
+    <option id= "query-id">query-id</option>
+    <option id= "query-time">query-time</option>
+  </select>
+  -->
+  <label>Electricity:</label>
+  <input id="electricity" type='text'>
+  <label>BuyerID:</label>
+  <input id='buyerId' type='text'>
+  <label>SellerID:</label>
+  <input id='sellerId' type='text'>
+  <div id="divButton">
+    <br>
+    <button id="buttonPost" onclick='postClick()'>Query-Post</button>
+    <!-- <button id="buttonQuery" onclick='queryClick()'>Query-All</button> -->
+  </div>
+  <div id="list">
+    <ol>
+      <li v-for="todo in todos">
+        <b>energyReading:</b>
+        {{ todo.energyReading }}
+        <b>sellerId:</b>
+        {{ todo.sellerId }}
+        <b>buyerId:</b>
+        {{ todo.buyerId }}
+        <b>timeStamp:</b>
+        {{ todo.timeStamp }}
+      </li>
+    </ol>
+  </div>
+  <!-- <ul id="list"></ul> -->
+</body>
+<!-- include src="javascripts/home.js" in the script tag to link this html page to home.js -->
+<script id="mainScript">
+  var app = new Vue({
+    el: '#list',
+    data: {
+      todos: undefined
+    }
+  });
+  function postClick() {
+    $.ajax({
+      url: "queryPost",
+      type: 'POST',
+      data: { energyReading: $('#electricity').val(), buyerId: $('#buyerId').val(), sellerId: $('#sellerId').val(), timeStamp: new Date() },
+      success: function (_data) {
+        app.todos.push(_data);
+      }
+    });
+  }
+  function queryClick() { //this is for not using Vue
+    $.ajax({
+      url: "queryAll",
+      type: 'GET',
+      data: {},
+      success: function (data) {
+        $('#list').empty();
+        for (var i = 0; i < data.length; i++) {
+          $('#list').append("<li><b>energyReadings:</b> " + data[i].energyReading + " <b>sellerId:</b> "
+            + data[i].sellerId + " <b>buyerId:</b> " + data[i].buyerId + " <b>timeStamp:</b> " + data[i].timeStamp + "</li><br>")
+        }
+      }
+    });
+  }
+  $.ajax({
+    url: "queryAll",
+    type: 'GET',
+    data: {},
+    success: function (_data) {
+      app.todos = _data;
+    }
+  });
+</script>
+
+</html>

@@ -1,0 +1,12 @@
+{
+    "energyReading": 10000,
+    "buyerId": "BUY_001",
+    "sellerId": "SEL_001",
+    "timeStamp": "Tue Aug 14 2018 17:25:23 GMT-0700 (Pacific Daylight Time)"
+}
+{
+    "energyReading": 9999,
+    "buyerId": "BUY_002",
+    "sellerId": "SEL_002",
+    "timeStamp": "Tue Aug 16 2018 14:05:23 GMT-0700 (Pacific Daylight Time)"
+}
