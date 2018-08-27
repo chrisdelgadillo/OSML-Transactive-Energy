@@ -1,0 +1,21 @@
+// Sends tx data 
+
+syntax = "proto3";
+
+service TXData {
+    // send relevent tx data to blockchain and get txCallback
+    rpc initTX (tx) returns (stream txCallback);
+}
+
+message tx {
+    float energyReading = 1;
+    string sellerId = 2;
+    string buyerId = 3;
+    string timeStamp = 4;
+}
+
+message txCallback {
+    string start = 1;
+    string performing = 2;
+    string finish = 3;
+}
