@@ -1,0 +1,27 @@
+<html>
+
+<head>
+  <title>grpc</title>
+  <link rel="stylesheet" href="/stylesheets/style.css">
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+</head>
+
+<body>
+  <h1>grpc</h1>
+  <input type="button" id="grpcButton" value="Make RPC">
+</body>
+<script>
+  function rpcClick () {
+    $.ajax({
+      url: '/jsonrpc',
+      type: 'GET',
+      success: function (data) {
+        alert("Success!");
+      }
+    });
+  };
+  $('#grpcButton').click(rpcClick);
+
+</script>
+
+</html>
